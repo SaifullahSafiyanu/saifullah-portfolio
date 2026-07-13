@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lead-Research &amp; Outreach Automation — Saifullah Safiyanu</title>
+<meta name="description" content="A system of four connected n8n workflows for lead research, tracker synchronisation, message preparation, and follow-up routing, with human review before any message is sent." />
+<link rel="canonical" href="https://saifullah-safiyanu.pages.dev/project-details/outreach-automation.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Lead-Research &amp; Outreach Automation — Saifullah Safiyanu" />
+<meta property="og:description" content="Four connected n8n workflows with human review before sending." />
+<meta property="og:image" content="https://saifullah-safiyanu.pages.dev/assets/images/og-image.png" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html">Saifullah <span>Safiyanu</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle navigation">Menu</button>
+    <nav class="links" id="nav" aria-label="Primary">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#skills">Skills</a>
+      <a href="../index.html#community">Community</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="proj-hero">
+    <div class="wrap">
+      <a class="backlink" href="../index.html#projects">&larr; Back to projects</a>
+      <h1>Partnership Lead-Research &amp; Outreach Automation</h1>
+      <p class="lead">A system of four connected n8n workflows that supports lead research, tracking, personalised
+        message preparation, and follow-up planning. A person reviews every message before it is sent.</p>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding:20px 22px 70px">
+    <div class="blk"><h2>The problem</h2>
+      <p>Researching partner organisations and preparing outreach by hand didn't scale. The work was repetitive,
+        easy to lose track of, and slow to keep consistent across many organisations.</p></div>
+
+    <div class="blk"><h2>My role</h2>
+      <p>I designed and ran the automation from requirements through to testing and iteration. I decided how the
+        four workflows would hand work to each other and where a person should stay in the loop.</p></div>
+
+    <div class="blk"><h2>What I built — four connected stages</h2>
+      <div class="wf-legend">
+        <span><i class="dot" style="background:#5b8cff"></i>Trigger</span>
+        <span><i class="dot" style="background:#43e0c4"></i>AI</span>
+        <span><i class="dot" style="background:#b98bff"></i>Lead-research tool</span>
+        <span><i class="dot" style="background:#3ddc97"></i>Sheets</span>
+        <span><i class="dot" style="background:#ff7a7a"></i>Email</span>
+        <span><i class="dot" style="background:#ffcc66"></i>Logic</span>
+      </div>
+
+      <div class="wf"><div class="wf-head"><h3>1 · Lead research</h3><span class="wf-live">live</span></div>
+        <div class="wf-flow">
+          <span class="node t-trigger">Form</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-ext">Lead-research tool</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-data">Data store</span>
+        </div>
+      </div>
+      <div class="wf"><div class="wf-head"><h3>2 · Tracker synchronisation</h3><span class="wf-live">live</span></div>
+        <div class="wf-flow">
+          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-ext">Results</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-logic">Parse</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Master leads</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Activity tracker</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-mail">Alert</span>
+        </div>
+      </div>
+      <div class="wf"><div class="wf-head"><h3>3 · Message preparation</h3><span class="wf-live">live</span></div>
+        <div class="wf-flow">
+          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-ext">Profile data</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-ai">Draft copy</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Log for review</span>
+        </div>
+      </div>
+      <div class="wf"><div class="wf-head"><h3>4 · Follow-up routing</h3><span class="wf-live">live</span></div>
+        <div class="wf-flow">
+          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-logic">Filter</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-logic">Route</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="branch"><span class="node t-ai">Follow-up draft</span><span class="node t-ai">Open message draft</span></span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Review queue</span>
+        </div>
+      </div>
+
+      <div class="callout"><strong>Human review is retained.</strong> The workflows prepare drafts and keep the
+        tracker up to date. A person reads and approves every message before anything is sent.</div>
+    </div>
+
+    <div class="cols2">
+      <div class="blk"><h2>Main technologies</h2>
+        <p><span class="tag">n8n</span><span class="tag">PhantomBuster</span><span class="tag">OpenAI</span><span class="tag">Google Sheets</span><span class="tag">Gmail</span><span class="tag">Webhooks</span></p></div>
+      <div class="blk"><h2>Message quality</h2>
+        <p>The drafting prompts keep a clear, plain, outcome-focused voice for education leaders and avoid marketing
+          clichés, so drafts are consistent and easy to review. Full internal prompts are not shown.</p></div>
+    </div>
+
+    <div class="blk"><h2>Results and what I learned</h2>
+      <ul>
+        <li>Four previously manual stages — research, tracking, message preparation, and follow-up planning — now run
+          as connected workflows.</li>
+        <li>The tracker stays consistent, so it is easier to see where each organisation stands.</li>
+      </ul>
+      <p style="margin-top:8px">Detailed performance measurement is ongoing. I learned that keeping a person in the
+        loop for the final message step is worth it — it protects quality and keeps the outreach genuine.</p></div>
+
+    <div class="blk"><h2>Evidence</h2>
+      <p class="evidence">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        Architecture rebuilt from four live workflows · redacted screenshots and a short demo available on request
+      </p></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Saifullah Safiyanu</span>
+    <a href="../index.html#projects">Back to projects</a>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
