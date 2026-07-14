@@ -48,6 +48,10 @@
   </div>
 
   <div class="wrap" style="padding:20px 22px 70px">
+    <figure style="margin:0 0 10px">
+      <img src="../assets/screenshots/reflector-live-form.png" alt="The live SkillsBooster AI Reflector sign-in form on skillsbooster.com, with email, name, school and age fields and a reCAPTCHA check" style="width:100%;border:1px solid var(--line);border-radius:12px" />
+      <figcaption style="color:var(--dim);font-size:.85rem;margin-top:6px">The AI Reflector, live on skillsbooster.com.</figcaption>
+    </figure>
     <div class="blk"><h2>The problem</h2>
       <p>Students find it hard to recognise and put words to their transferable skills for CVs, interviews, and
         applications. Careers teams want to help but don't have a scalable way to guide that reflection one-to-one.
@@ -74,6 +78,10 @@
         <p style="color:var(--dim);font-size:.82rem;margin:8px 0 0">The agent also connects to session memory and a
           database for saved reflections. Internal prompts and configuration are not shown.</p>
       </div>
+      <figure style="margin:16px 0 0">
+        <img src="../assets/screenshots/reflector-n8n-workflow.png" alt="The n8n workflow canvas for the AI Skills Reflector: a chat trigger feeds a code node and a switch that routes audio to a Whisper transcription node, then into the SkillsBooster V2 AI agent with an OpenAI chat model, memory, a prompts sheet, and store and get memory tools, ending at a respond-to-webhook node" style="width:100%;border:1px solid var(--line);border-radius:12px" />
+        <figcaption style="color:var(--dim);font-size:.85rem;margin-top:6px">The live n8n workflow behind the AI Skills Reflector (SkillsBooster Chatbot v2), reconstructed here from the actual canvas.</figcaption>
+      </figure>
     </div>
 
     <div class="cols2">
@@ -98,12 +106,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
         Architecture rebuilt from the live workflow · demo and project documentation available on request
       </p></div>
-    <figure style="margin:16px 0">
-  <img src="../assets/screenshots/reflector-n8n-workflow.png"
-       alt="n8n workflow canvas for the AI Skills Reflector: chat trigger, audio detection, Whisper transcription, AI agent, memory, and response nodes"
-       style="width:100%;border:1px solid var(--line);border-radius:12px" />
-  <figcaption style="color:var(--dim);font-size:.85rem;margin-top:6px">The live n8n workflow behind the AI Skills Reflector.</figcaption>
-</figure>
   </div>
 </main>
 
