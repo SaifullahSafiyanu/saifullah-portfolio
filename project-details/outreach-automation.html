@@ -53,53 +53,65 @@
       <p>I designed and ran the automation from requirements through to testing and iteration. I decided how the
         four workflows would hand work to each other and where a person should stay in the loop.</p></div>
 
-    <div class="blk"><h2>What I built — four connected stages</h2>
+    <div class="blk"><h2>What I built — an end-to-end outreach loop</h2>
+      <p>Four connected n8n workflows run the full loop: <b>collect</b> leads from Sales Navigator, <b>write</b>
+        personalised messages, <b>send</b> the connection requests, <b>track</b> responses, and <b>route</b> the right
+        follow-up. Two PhantomBuster phantoms handle the LinkedIn steps, OpenAI writes the copy, and Google Sheets
+        holds the working data.</p>
       <div class="wf-legend">
         <span><i class="dot" style="background:#5b8cff"></i>Trigger</span>
-        <span><i class="dot" style="background:#43e0c4"></i>AI</span>
-        <span><i class="dot" style="background:#b98bff"></i>Lead-research tool</span>
-        <span><i class="dot" style="background:#3ddc97"></i>Sheets</span>
-        <span><i class="dot" style="background:#ff7a7a"></i>Email</span>
+        <span><i class="dot" style="background:#43e0c4"></i>OpenAI</span>
+        <span><i class="dot" style="background:#b98bff"></i>PhantomBuster</span>
+        <span><i class="dot" style="background:#3ddc97"></i>Google Sheets</span>
+        <span><i class="dot" style="background:#ff7a7a"></i>Gmail</span>
         <span><i class="dot" style="background:#ffcc66"></i>Logic</span>
       </div>
 
-      <div class="wf"><div class="wf-head"><h3>1 · Lead research</h3><span class="wf-live">live</span></div>
+      <div class="wf"><div class="wf-head"><h3>1 · SCRAPPER — collect leads</h3><span class="wf-live">live</span></div>
         <div class="wf-flow">
-          <span class="node t-trigger">Form</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-ext">Lead-research tool</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-trigger">Form submission</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-ext">PhantomBuster · Sales Nav Export</span><span class="arrow" aria-hidden="true">&rarr;</span>
           <span class="node t-data">Data store</span>
         </div>
-      </div>
-      <div class="wf"><div class="wf-head"><h3>2 · Tracker synchronisation</h3><span class="wf-live">live</span></div>
-        <div class="wf-flow">
-          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-ext">Results</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-logic">Parse</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-sheet">Master leads</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-sheet">Activity tracker</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-mail">Alert</span>
-        </div>
-      </div>
-      <div class="wf"><div class="wf-head"><h3>3 · Message preparation</h3><span class="wf-live">live</span></div>
-        <div class="wf-flow">
-          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-ext">Profile data</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-ai">Draft copy</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-sheet">Log for review</span>
-        </div>
-      </div>
-      <div class="wf"><div class="wf-head"><h3>4 · Follow-up routing</h3><span class="wf-live">live</span></div>
-        <div class="wf-flow">
-          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-logic">Filter</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-logic">Route</span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="branch"><span class="node t-ai">Follow-up draft</span><span class="node t-ai">Open message draft</span></span><span class="arrow" aria-hidden="true">&rarr;</span>
-          <span class="node t-sheet">Review queue</span>
-        </div>
+        <p style="color:var(--dim);font-size:.82rem;margin:8px 0 0">Exports leads from a Sales Navigator search or lead list.</p>
       </div>
 
-      <div class="callout"><strong>Human review is retained.</strong> The workflows prepare drafts and keep the
-        tracker up to date. A person reads and approves every message before anything is sent.</div>
+      <div class="wf"><div class="wf-head"><h3>2 · Message Generator — write &amp; send requests</h3><span class="wf-live">live</span></div>
+        <div class="wf-flow">
+          <span class="node t-trigger">Webhook (leads)</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-ai">OpenAI · message + follow-ups + summary</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Google Sheet</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-ext">PhantomBuster · LinkedIn Outreach</span>
+        </div>
+        <p style="color:var(--dim);font-size:.82rem;margin:8px 0 0">For each lead, OpenAI drafts a tailored connection request, follow-ups and a short summary; the sheet then feeds the LinkedIn Outreach phantom that sends the requests.</p>
+      </div>
+
+      <div class="wf"><div class="wf-head"><h3>3 · Tracker Sync — keep the pipeline current</h3><span class="wf-live">live</span></div>
+        <div class="wf-flow">
+          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-logic">Parse LinkedIn URLs</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Update Master leads</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-logic">Map outreach data</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Outreach activity</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-mail">Email notification</span>
+        </div>
+        <p style="color:var(--dim);font-size:.82rem;margin:8px 0 0">Updates the trackers and flags who has accepted, replied, or needs a follow-up or InMail.</p>
+      </div>
+
+      <div class="wf"><div class="wf-head"><h3>4 · Messages — route the follow-up</h3><span class="wf-live">live</span></div>
+        <div class="wf-flow">
+          <span class="node t-trigger">Webhook</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-logic">Filter by status</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-logic">Route</span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="branch"><span class="node t-ai">OpenAI · Follow-Up</span><span class="node t-ai">OpenAI · Open InMail</span></span><span class="arrow" aria-hidden="true">&rarr;</span>
+          <span class="node t-sheet">Dispatch queue</span>
+        </div>
+        <p style="color:var(--dim);font-size:.82rem;margin:8px 0 0">Chooses a 2nd follow-up for accepted connections, or an Open InMail for the rest.</p>
+      </div>
+
+      <div class="callout"><strong>Human oversight.</strong> I configure and monitor the pipeline. The initial
+        connection copy is generated and dispatched automatically, while the 2nd follow-up and Open InMail are
+        prepared for review before they go out.</div>
     </div>
 
     <div class="cols2">
